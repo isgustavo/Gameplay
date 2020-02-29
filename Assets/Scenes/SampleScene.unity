@@ -340,7 +340,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d887ee92b16b84f0cb86d8a56d070f88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playableCharacterAmount: 1
+  playableCharacterAmount: 2
   currentPlayableCharacters: 0
 --- !u!114 &1062600318
 MonoBehaviour:

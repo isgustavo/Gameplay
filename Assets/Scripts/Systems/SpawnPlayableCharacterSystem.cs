@@ -8,15 +8,16 @@ using UnityEngine.InputSystem;
 public class SpawnPlayableCharacterSystem : JobComponentSystem
 {
     EntityQuery activeDeviceInputsQuery;
-    Entity playableCharacterEntity;
+    //Entity playableCharacterEntity;
+    GameObject PlayableCharacterPrefab;
 
     protected override void OnCreate()
     {
         base.OnCreate();
 
-        GameObject prefab = Resources.Load<GameObject>("Sphere");
-        var settings = GameObjectConversionSettings.FromWorld(World.DefaultGameObjectInjectionWorld, null);
-        playableCharacterEntity = GameObjectConversionUtility.ConvertGameObjectHierarchy(prefab, settings);
+        PlayableCharacterPrefab = Resources.Load<GameObject>("XBot");
+        //var settings = GameObjectConversionSettings.FromWorld(World.DefaultGameObjectInjectionWorld, null);
+        //playableCharacterEntity = GameObjectConversionUtility.ConvertGameObjectHierarchy(prefab, settings);
 
         activeDeviceInputsQuery = GetEntityQuery(ComponentType.ReadOnly<PlayableCharacterDeviceInputComponentData>());
     }
@@ -86,10 +87,12 @@ public class SpawnPlayableCharacterSystem : JobComponentSystem
 
     private void SpawnPlayableCharacter(EntityCommandBuffer ecb, int deviceInputId, int mouseInputId = -1)
     {
-        Entity playableCharacter = ecb.Instantiate(playableCharacterEntity);
-        ecb.AddComponent(playableCharacter, new PlayableCharacterDeviceInputComponentData {
-            DeviceInputId = deviceInputId,
-            AdditionalDeviceInputId = mouseInputId });
-        ecb.AddComponent(playableCharacter, new PlayableCharacterInputsComponentData { });
+        GameObject obj = GameObject.Instantiate(PlayableCharacterPrefab, Vector3.zero, Quaternion.identity);
+        obj.GetComponent<PlayableCharacterAuthoring>().SetupPlayableCharacterDeviceInput(deviceInputId, mouseInputId);
+        //Entity playableCharacter = obj.GetComponent<GameObjectEntity>().Entity; //ecb.Instantiate(playableCharacterEntity);
+        //ecb.AddComponent(playableCharacter, new PlayableCharacterDeviceInputComponentData {
+        //    DeviceInputId = deviceInputId,
+        //    AdditionalDeviceInputId = mouseInputId });
+        //ecb.AddComponent(playableCharacter, new PlayableCharacterInputsComponentData { });
     }
 }

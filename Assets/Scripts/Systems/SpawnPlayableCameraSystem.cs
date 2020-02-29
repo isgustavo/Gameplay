@@ -9,9 +9,13 @@ public class SpawnPlayableCameraSystem : JobComponentSystem
 {
     EntityQuery activeCamerasQuery;
 
+    GameObject PlayableCameraPrefab;
+
     protected override void OnCreate()
     {
         base.OnCreate();
+
+        PlayableCameraPrefab = Resources.Load<GameObject>("Camera");
         activeCamerasQuery = GetEntityQuery(ComponentType.ReadOnly<PlayableCameraDeviceInputData>());
     }
 
@@ -50,16 +54,19 @@ public class SpawnPlayableCameraSystem : JobComponentSystem
 
     private void SpawnPlayableCamera(EntityCommandBuffer ecb, int deviceInputId)
     {
-        GameObject camera = new GameObject();
-        camera.AddComponent<Camera>();
-        camera.transform.position = new Vector3(0f, 5f, -10f);
-        camera.transform.rotation = new Quaternion(.15f, 0.0f, 0f, 0.85f);
-        PlayableCameraHybridData playableCameraHybridData = camera.AddComponent<PlayableCameraHybridData>();
-        playableCameraHybridData.DeviceInputId = deviceInputId;
+        GameObject obj = GameObject.Instantiate(PlayableCameraPrefab, new Vector3(0f, 5f, -10f), new Quaternion(.15f, 0.0f, 0f, 0.85f));
+        obj.GetComponent<PlayableCameraAuthoring>().SetupPlayableCameraDeviceInputValue(deviceInputId);
 
-        Entity playableCamera = ecb.CreateEntity();
-        ecb.AddComponent(playableCamera, new PlayableCameraDeviceInputData { DeviceInputId = deviceInputId });
-        ecb.AddComponent(playableCamera, new NewPlayableCameraSpawnedTag { });
+        //GameObject camera = new GameObject();
+        //camera.AddComponent<Camera>();
+        //camera.transform.position = new Vector3(0f, 5f, -10f);
+        //camera.transform.rotation = new Quaternion(.15f, 0.0f, 0f, 0.85f);
+        //PlayableCameraHybridData playableCameraHybridData = camera.AddComponent<PlayableCameraHybridData>();
+        //playableCameraHybridData.DeviceInputId = deviceInputId;
+
+        //Entity playableCamera = ecb.CreateEntity();
+        //ecb.AddComponent(playableCamera, new PlayableCameraDeviceInputData { DeviceInputId = deviceInputId });
+        //ecb.AddComponent(playableCamera, new NewPlayableCameraSpawnedTag { });
 
     }
 }
