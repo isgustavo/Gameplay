@@ -54,7 +54,7 @@ public class SpawnPlayableCameraSystem : JobComponentSystem
 
     private void SpawnPlayableCamera(EntityCommandBuffer ecb, int deviceInputId)
     {
-        GameObject obj = GameObject.Instantiate(PlayableCameraPrefab, new Vector3(0f, 5f, -10f), new Quaternion(.15f, 0.0f, 0f, 0.85f));
+        GameObject obj = GameObject.Instantiate(PlayableCameraPrefab, new Vector3(0f, 2f, -5f), Quaternion.identity);
         obj.GetComponent<PlayableCameraAuthoring>().SetupPlayableCameraDeviceInputValue(deviceInputId);
 
         //GameObject camera = new GameObject();

@@ -15,7 +15,7 @@ public class SpawnPlayableCharacterSystem : JobComponentSystem
     {
         base.OnCreate();
 
-        PlayableCharacterPrefab = Resources.Load<GameObject>("XBot");
+        PlayableCharacterPrefab = Resources.Load<GameObject>("PlayableCharacter");
         //var settings = GameObjectConversionSettings.FromWorld(World.DefaultGameObjectInjectionWorld, null);
         //playableCharacterEntity = GameObjectConversionUtility.ConvertGameObjectHierarchy(prefab, settings);
 
@@ -89,10 +89,6 @@ public class SpawnPlayableCharacterSystem : JobComponentSystem
     {
         GameObject obj = GameObject.Instantiate(PlayableCharacterPrefab, Vector3.zero, Quaternion.identity);
         obj.GetComponent<PlayableCharacterAuthoring>().SetupPlayableCharacterDeviceInput(deviceInputId, mouseInputId);
-        //Entity playableCharacter = obj.GetComponent<GameObjectEntity>().Entity; //ecb.Instantiate(playableCharacterEntity);
-        //ecb.AddComponent(playableCharacter, new PlayableCharacterDeviceInputComponentData {
-        //    DeviceInputId = deviceInputId,
-        //    AdditionalDeviceInputId = mouseInputId });
-        //ecb.AddComponent(playableCharacter, new PlayableCharacterInputsComponentData { });
+
     }
 }

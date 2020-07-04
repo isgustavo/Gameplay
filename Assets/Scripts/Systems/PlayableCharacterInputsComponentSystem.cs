@@ -103,7 +103,7 @@ public class PlayableCharacterInputsComponentSystem : JobComponentSystem, Input.
             deviceId = deviceId,
             inputValue = context.ReadValue<Vector2>()
         };
-
+        
         MoveInputs.Add(e);
     }
 
